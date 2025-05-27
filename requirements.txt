@@ -1,1 +1,24 @@
-will be completed on 30.06.2025
+# Python 3.10
+dvc
+dagshub
+graphviz
+matplotlib
+numpy
+mlflow
+PyYAML
+torch
+torchview
+torchaudio
+torchvision
+torchsummary
+torchmetrics
+scikit-image
+opencv-python
+nltk
+python-dotenv
+langchain-openai
+ipykernel
+langchain
+langchain-huggingface
+langchain-community
+langchain-google-genai
