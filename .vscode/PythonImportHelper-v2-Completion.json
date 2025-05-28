@@ -18,6 +18,15 @@
         "documentation": {}
     },
     {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
         "label": "torch",
         "kind": 6,
         "isExtraImport": true,
@@ -42,15 +51,6 @@
         "importPath": "torch.nn",
         "description": "torch.nn",
         "detail": "torch.nn",
-        "documentation": {}
-    },
-    {
-        "label": "math",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "math",
-        "description": "math",
-        "detail": "math",
         "documentation": {}
     },
     {
@@ -95,21 +95,21 @@
         "documentation": {}
     },
     {
-        "label": "RMSNormalization",
-        "kind": 6,
-        "importPath": "src.RMSNorm",
-        "description": "src.RMSNorm",
-        "peekOfCode": "class RMSNormalization(nn.Module):\n    def __init__(self, dimension: int = 512, eps: float = 1e-4):\n        super(RMSNormalization, self).__init__()\n        self.dimension = dimension\n        self.eps = eps\n        self.gamma = nn.Parameter(\n            data=torch.ones((1, 1, self.dimension)), requires_grad=True\n        )\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):",
-        "detail": "src.RMSNorm",
-        "documentation": {}
-    },
-    {
         "label": "SwiGLU",
         "kind": 6,
         "importPath": "src.activation_func",
         "description": "src.activation_func",
         "peekOfCode": "class SwiGLU(nn.Module):\n    def __init__(self, name: str = \"SwiGLU\"):\n        super(SwiGLU, self).__init__()\n        self.name = name\n        self.constant = 0.044715\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):\n            raise TypeError(\"Input must be a torch.Tensor\")\n        swish = x * torch.sigmoid(x)\n        gelu = 0.5 * x * (1 + torch.tanh(torch.sqrt(torch.tensor(2 / math.pi)) * (x + self.constant * torch.pow(x, 3))))",
         "detail": "src.activation_func",
+        "documentation": {}
+    },
+    {
+        "label": "RMSNormalization",
+        "kind": 6,
+        "importPath": "src.rms_norm",
+        "description": "src.rms_norm",
+        "peekOfCode": "class RMSNormalization(nn.Module):\n    def __init__(self, dimension: int = 512, eps: float = 1e-4):\n        super(RMSNormalization, self).__init__()\n        self.dimension = dimension\n        self.eps = eps\n        self.gamma = nn.Parameter(\n            data=torch.ones((1, 1, self.dimension)), requires_grad=True\n        )\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):",
+        "detail": "src.rms_norm",
         "documentation": {}
     },
     {
