@@ -7,9 +7,9 @@ import torch.nn as nn
 sys.path.append("./src/")
 
 
-class RMSNormalization(nn.Module):
+class RMSNorm(nn.Module):
     def __init__(self, dimension: int = 512, eps: float = 1e-4):
-        super(RMSNormalization, self).__init__()
+        super(RMSNorm, self).__init__()
 
         self.dimension = dimension
         self.eps = eps
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     dimension = args.dimension
     eps = args.eps
 
-    norm = RMSNormalization(dimension=dimension, eps=eps)
+    norm = RMSNorm(dimension=dimension, eps=eps)
 
     batch_size = 64
     sequence_length = 128

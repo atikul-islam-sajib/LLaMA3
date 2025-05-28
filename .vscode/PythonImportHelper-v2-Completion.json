@@ -63,19 +63,19 @@
         "documentation": {}
     },
     {
+        "label": "RMSNorm",
+        "importPath": "rms_norm",
+        "description": "rms_norm",
+        "isExtraImport": true,
+        "detail": "rms_norm",
+        "documentation": {}
+    },
+    {
         "label": "SwiGLU",
         "importPath": "activation_func",
         "description": "activation_func",
         "isExtraImport": true,
         "detail": "activation_func",
-        "documentation": {}
-    },
-    {
-        "label": "RMSNormalization",
-        "importPath": "RMSNorm",
-        "description": "RMSNorm",
-        "isExtraImport": true,
-        "detail": "RMSNorm",
         "documentation": {}
     },
     {
@@ -104,11 +104,11 @@
         "documentation": {}
     },
     {
-        "label": "RMSNormalization",
+        "label": "RMSNorm",
         "kind": 6,
         "importPath": "src.rms_norm",
         "description": "src.rms_norm",
-        "peekOfCode": "class RMSNormalization(nn.Module):\n    def __init__(self, dimension: int = 512, eps: float = 1e-4):\n        super(RMSNormalization, self).__init__()\n        self.dimension = dimension\n        self.eps = eps\n        self.gamma = nn.Parameter(\n            data=torch.ones((1, 1, self.dimension)), requires_grad=True\n        )\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):",
+        "peekOfCode": "class RMSNorm(nn.Module):\n    def __init__(self, dimension: int = 512, eps: float = 1e-4):\n        super(RMSNorm, self).__init__()\n        self.dimension = dimension\n        self.eps = eps\n        self.gamma = nn.Parameter(\n            data=torch.ones((1, 1, self.dimension)), requires_grad=True\n        )\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):",
         "detail": "src.rms_norm",
         "documentation": {}
     },
@@ -117,7 +117,7 @@
         "kind": 6,
         "importPath": "unittest.test",
         "description": "unittest.test",
-        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n        self.rms_normalization = RMSNormalization(dimension=self.dimension_size)\n    def test_activation_func(self):\n        texts = torch.randn(\n            (self.batch_size, self.sequence_length, self.dimension_size)",
+        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n        self.rms_normalization = RMSNorm(dimension=self.dimension_size)\n    def test_activation_func(self):\n        texts = torch.randn(\n            (self.batch_size, self.sequence_length, self.dimension_size)",
         "detail": "unittest.test",
         "documentation": {}
     }

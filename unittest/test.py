@@ -6,8 +6,8 @@ import torch.nn as nn
 
 sys.path.append("./src/")
 
+from rms_norm import RMSNorm
 from activation_func import SwiGLU
-from RMSNorm import RMSNormalization
 
 
 class UnitTest(unittest.TestCase):
@@ -17,7 +17,7 @@ class UnitTest(unittest.TestCase):
         self.dimension_size = 512
 
         self.activation_func = SwiGLU()
-        self.rms_normalization = RMSNormalization(dimension=self.dimension_size)
+        self.rms_normalization = RMSNorm(dimension=self.dimension_size)
 
     def test_activation_func(self):
         texts = torch.randn(
