@@ -54,6 +54,23 @@
         "documentation": {}
     },
     {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "SwiGLU",
+        "importPath": "activation_func",
+        "description": "activation_func",
+        "isExtraImport": true,
+        "detail": "activation_func",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
@@ -76,6 +93,15 @@
         "description": "src.activation_func",
         "peekOfCode": "class SwiGLU(nn.Module):\n    def __init__(self, name: str = \"SwiGLU\"):\n        super(SwiGLU, self).__init__()\n        self.name = name\n        self.constant = 0.044715\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):\n            raise TypeError(\"Input must be a torch.Tensor\")\n        swish = x * torch.sigmoid(x)\n        gelu = 0.5 * x * (1 + torch.tanh(torch.sqrt(torch.tensor(2 / math.pi)) * (x + self.constant * torch.pow(x, 3))))",
         "detail": "src.activation_func",
+        "documentation": {}
+    },
+    {
+        "label": "UnitTest",
+        "kind": 6,
+        "importPath": "unittest.test",
+        "description": "unittest.test",
+        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n    def test_activation_func(self):\n        texts = torch.randn((self.batch_size, self.sequence_length, self.dimension_size))\n        self.assertEqual(self.activation_func(texts).shape, texts.shape,\n                         \"SwiGLU activation function is not working properly\".capitalize())",
+        "detail": "unittest.test",
         "documentation": {}
     }
 ]
