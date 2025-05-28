@@ -15,26 +15,19 @@ class RMSNormalization(nn.Module):
         self.eps = eps
 
         self.gamma = nn.Parameter(
-            data=torch.ones(
-                (
-                    self.dimension // self.dimension,
-                    self.dimension // self.dimension,
-                    self.dimension,
-                )
-            ),
-            requires_grad=True,
+            data=torch.ones((1, 1, self.dimension)), requires_grad=True
         )
 
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise TypeError("Input must be a torch.Tensor".capitalize())
 
-        RMS = torch.sqrt(torch.mean(input=x**2, dim=-1) + self.eps)
+        RMS = torch.sqrt(input=torch.mean(input=x**2, dim=-1) + self.eps)
         RMS = RMS.unsqueeze(dim=-1)
 
         RMSNorm = x / RMS
 
-        return torch.mul(RMSNorm, self.gamma)
+        return torch.mul(input=RMSNorm, other=self.gamma)
 
 
 if __name__ == "__main__":
