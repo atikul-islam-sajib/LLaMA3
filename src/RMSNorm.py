@@ -1,6 +1,7 @@
 import os
 import sys
 import torch
+import argparse
 import torch.nn as nn
 
 sys.path.append("./src/")
@@ -13,23 +14,56 @@ class RMSNormalization(nn.Module):
         self.dimension = dimension
         self.eps = eps
 
-        self.gamma = nn.Parameter(data=torch.ones((self.dimension // self.dimension,
-                                  self.dimension // self.dimension, self.dimension)), requires_grad=True)
+        self.gamma = nn.Parameter(
+            data=torch.ones(
+                (
+                    self.dimension // self.dimension,
+                    self.dimension // self.dimension,
+                    self.dimension,
+                )
+            ),
+            requires_grad=True,
+        )
 
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise TypeError("Input must be a torch.Tensor".capitalize())
 
-        RMS = torch.sqrt(torch.mean(x ** 2, dim=-1) + self.eps)
+        RMS = torch.sqrt(torch.mean(input=x**2, dim=-1) + self.eps)
         RMS = RMS.unsqueeze(dim=-1)
-        
+
         RMSNorm = x / RMS
-        
+
         return torch.mul(RMSNorm, self.gamma)
-        
 
 
 if __name__ == "__main__":
-    norm = RMSNormalization(dimension=512)
-    
-    print(norm(torch.randn(64, 128, 512)).size())
+    parser = argparse.ArgumentParser(description="RMSNorm activation function".title())
+    parser.add_argument(
+        "--dimension",
+        type=int,
+        default=512,
+        help="Dimension of the input tensor".capitalize(),
+    )
+    parser.add_argument(
+        "--eps",
+        type=float,
+        default=1e-4,
+        help="Epsilon value for numerical stability".capitalize(),
+    )
+    args = parser.parse_args()
+
+    dimension = args.dimension
+    eps = args.eps
+
+    norm = RMSNormalization(dimension=dimension, eps=eps)
+
+    batch_size = 64
+    sequence_length = 128
+    dimension_size = 512
+
+    assert (norm(torch.randn(batch_size, sequence_length, dimension)).size()) == (
+        batch_size,
+        sequence_length,
+        dimension,
+    ), "RMSNorm activation function is not working properly".capitalize()
