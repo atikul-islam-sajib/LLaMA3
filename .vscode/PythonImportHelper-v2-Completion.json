@@ -71,6 +71,14 @@
         "documentation": {}
     },
     {
+        "label": "RMSNormalization",
+        "importPath": "RMSNorm",
+        "description": "RMSNorm",
+        "isExtraImport": true,
+        "detail": "RMSNorm",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
@@ -109,7 +117,7 @@
         "kind": 6,
         "importPath": "unittest.test",
         "description": "unittest.test",
-        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n    def test_activation_func(self):\n        texts = torch.randn((self.batch_size, self.sequence_length, self.dimension_size))\n        self.assertEqual(self.activation_func(texts).shape, texts.shape,\n                         \"SwiGLU activation function is not working properly\".capitalize())",
+        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n        self.rms_normalization = RMSNormalization(dimension=self.dimension_size)\n    def test_activation_func(self):\n        texts = torch.randn(\n            (self.batch_size, self.sequence_length, self.dimension_size)",
         "detail": "unittest.test",
         "documentation": {}
     }
