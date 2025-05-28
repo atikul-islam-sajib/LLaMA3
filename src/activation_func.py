@@ -2,6 +2,7 @@ import os
 import sys
 import math
 import torch
+import argparse
 import torch.nn as nn
 
 sys.path.append("./src/")
@@ -24,7 +25,15 @@ class SwiGLU(nn.Module):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="SwiGLU activation function".title())
+
     activation_func = SwiGLU()
 
-    texts = torch.randn((64, 128, 512))
-    print(activation_func(texts).size())
+    batch_size = 64
+    sequence_length = 128
+    dimension_size = 512
+
+    texts = torch.randn((batch_size, sequence_length, dimension_size))
+
+    assert (activation_func(texts).size()) == (batch_size, sequence_length,
+                                               dimension_size), "SwiGLU activation function is not working properly".capitalize()
