@@ -1,0 +1,63 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "torch.nn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.nn",
+        "description": "torch.nn",
+        "detail": "torch.nn",
+        "documentation": {}
+    },
+    {
+        "label": "setup",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "find_packages",
+        "importPath": "setuptools",
+        "description": "setuptools",
+        "isExtraImport": true,
+        "detail": "setuptools",
+        "documentation": {}
+    },
+    {
+        "label": "SwiGLU",
+        "kind": 6,
+        "importPath": "src.activation_func",
+        "description": "src.activation_func",
+        "peekOfCode": "class SwiGLU(nn.Module):\n    def __init__(self, name: str = \"SwiGLU\"):\n        super(SwiGLU, self).__init__()\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):\n            raise TypeError(\"Input must be a torch.Tensor\")\n        pass\nif __name__ == \"__main__\":\n    pass",
+        "detail": "src.activation_func",
+        "documentation": {}
+    }
+]
