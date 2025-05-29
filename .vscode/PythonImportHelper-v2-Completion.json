@@ -54,6 +54,14 @@
         "documentation": {}
     },
     {
+        "label": "draw_graph",
+        "importPath": "torchview",
+        "description": "torchview",
+        "isExtraImport": true,
+        "detail": "torchview",
+        "documentation": {}
+    },
+    {
         "label": "unittest",
         "kind": 6,
         "isExtraImport": true,

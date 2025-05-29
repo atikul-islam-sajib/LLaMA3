@@ -1,7 +1,9 @@
 import os
 import sys
 import torch
+import argparse
 import torch.nn as nn
+from torchview import draw_graph
 
 sys.path.append("./src/")
 
@@ -93,10 +95,64 @@ class GroupedQueryAttention(nn.Module):
 
         return attention
 
+    @staticmethod
+    def total_parameters(model):
+        if not isinstance(model, GroupedQueryAttention):
+            raise TypeError("Model must be a GroupedQueryAttention".capitalize())
+
+        return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 
 if __name__ == "__main__":
-    attention = GroupedQueryAttention()
-    texts = torch.randn((64, 128, 512))
+    parser = argparse.ArgumentParser(description="Grouped Query Attention".title())
+    parser.add_argument(
+        "--dimension", type=int, default=512, help="Dimension of the input".capitalize()
+    )
+    parser.add_argument(
+        "--query_heads", type=int, default=8, help="Number of query heads".capitalize()
+    )
+    parser.add_argument(
+        "--kv_heads", type=int, default=4, help="Number of kv heads".capitalize()
+    )
+    parser.add_argument(
+        "--display", action="store_true", help="Display the graph".capitalize()
+    )
+    parser.add_argument(
+        "--params", action="store_true", help="Display the parameters".capitalize()
+    )
 
-    query = attention(texts)
-    print(query.size())
+    args = parser.parse_args()
+
+    dimension = args.dimension
+    query_heads = args.query_heads
+    kv_heads = args.kv_heads
+
+    batch_size = 64
+    sequence_length = 128
+    dimension_size = 512
+
+    attention = GroupedQueryAttention(
+        dimension=dimension, query_heads=query_heads, kv_heads=kv_heads
+    )
+
+    texts = torch.randn((batch_size, sequence_length, dimension_size))
+    output = attention(texts)
+
+    assert output.size() == (
+        batch_size,
+        sequence_length,
+        dimension_size,
+    ), "GroupedQueryAttention is not working properly".capitalize()
+
+    if args.display:
+        draw_graph(model=attention, input_data=texts).visual_graph.render(
+            filename="./artifacts/files/GQA", format="png"
+        )
+        print("Image saved in the folder ./artifacts/files/GQA.png".capitalize())
+
+    if args.params:
+        print(
+            "Total paramaters of the GQA = {}".format(
+                GroupedQueryAttention.total_parameters(model=attention)
+            )
+        )
