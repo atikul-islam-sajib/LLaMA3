@@ -9,6 +9,7 @@ sys.path.append("./src/")
 from rms_norm import RMSNorm
 from activation_func import SwiGLU
 from attention import GroupedQueryAttention
+from feedforward import FeedForwardNeuralNetwork
 
 
 class UnitTest(unittest.TestCase):
@@ -25,6 +26,10 @@ class UnitTest(unittest.TestCase):
             dimension=self.dimension_size,
             query_heads=self.query_heads,
             kv_heads=self.kv_heads,
+        )
+        self.network = FeedForwardNeuralNetwork(
+            hidden_dimension=self.dimension_size,
+            output_dimension=self.dimension_size * 4,
         )
 
     def test_activation_func(self):
@@ -76,6 +81,22 @@ class UnitTest(unittest.TestCase):
             self.attention(texts),
             torch.Tensor,
             "Attention layer is not working properly".capitalize(),
+        )
+        
+    def test_mlp_layer(self):
+        texts = torch.randn(
+            (self.batch_size, self.sequence_length, self.dimension_size)
+        )
+        self.assertEqual(
+            self.network(texts).shape,
+            texts.shape,
+            "FeedForwardNeuralNetwork is not working properly".capitalize(),
+        )
+
+        self.assertIsInstance(
+            self.network(texts),
+            torch.Tensor,
+            "FeedForwardNeuralNetwork is not working properly".capitalize(),
         )
 
 

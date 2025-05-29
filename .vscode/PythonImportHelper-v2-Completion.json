@@ -112,6 +112,14 @@
         "documentation": {}
     },
     {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feedforward",
+        "description": "feedforward",
+        "isExtraImport": true,
+        "detail": "feedforward",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
