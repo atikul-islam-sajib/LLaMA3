@@ -54,6 +54,15 @@
         "documentation": {}
     },
     {
+        "label": "warnings",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "warnings",
+        "description": "warnings",
+        "detail": "warnings",
+        "documentation": {}
+    },
+    {
         "label": "draw_graph",
         "importPath": "torchview",
         "description": "torchview",
@@ -124,7 +133,7 @@
         "kind": 6,
         "importPath": "src.attention",
         "description": "src.attention",
-        "peekOfCode": "class GroupedQueryAttention(nn.Module):\n    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):\n        super(GroupedQueryAttention, self).__init__()\n        self.dimension = dimension\n        self.query_heads = query_heads\n        self.kv_heads = kv_heads\n        assert (\n            self.dimension % self.query_heads == 0\n        ), \"Dimension must be divisible by query heads\".capitalize()\n        assert (",
+        "peekOfCode": "class GroupedQueryAttention(nn.Module):\n    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):\n        super(GroupedQueryAttention, self).__init__()\n        self.dimension = dimension\n        self.query_heads = query_heads\n        self.kv_heads = kv_heads\n        warnings.warn(\n            \"\"\"If you are defined the query heads = 8 and kv heads = 4, it is recommended to use the SwiGLU activation function\"\"\",\n            UserWarning,\n        )",
         "detail": "src.attention",
         "documentation": {}
     },

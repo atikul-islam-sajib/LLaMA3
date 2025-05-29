@@ -2,6 +2,7 @@ import os
 import sys
 import torch
 import argparse
+import warnings
 import torch.nn as nn
 from torchview import draw_graph
 
@@ -15,6 +16,11 @@ class GroupedQueryAttention(nn.Module):
         self.dimension = dimension
         self.query_heads = query_heads
         self.kv_heads = kv_heads
+
+        warnings.warn(
+            """If you are defined the query heads = 8 and kv heads = 4, it is recommended to use the SwiGLU activation function""",
+            UserWarning,
+        )
 
         assert (
             self.dimension % self.query_heads == 0
