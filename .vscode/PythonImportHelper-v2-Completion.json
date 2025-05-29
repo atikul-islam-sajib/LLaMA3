@@ -87,6 +87,14 @@
         "documentation": {}
     },
     {
+        "label": "GroupedQueryAttention",
+        "importPath": "attention",
+        "description": "attention",
+        "isExtraImport": true,
+        "detail": "attention",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
@@ -134,7 +142,7 @@
         "kind": 6,
         "importPath": "unittest.test",
         "description": "unittest.test",
-        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.activation_func = SwiGLU()\n        self.rms_normalization = RMSNorm(dimension=self.dimension_size)\n    def test_activation_func(self):\n        texts = torch.randn(\n            (self.batch_size, self.sequence_length, self.dimension_size)",
+        "peekOfCode": "class UnitTest(unittest.TestCase):\n    def setUp(self):\n        self.batch_size = 64\n        self.sequence_length = 128\n        self.dimension_size = 512\n        self.query_heads = 8\n        self.kv_heads = 4\n        self.activation_func = SwiGLU()\n        self.rms_normalization = RMSNorm(dimension=self.dimension_size)\n        self.attention = GroupedQueryAttention(",
         "detail": "unittest.test",
         "documentation": {}
     }
