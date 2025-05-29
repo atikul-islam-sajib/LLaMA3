@@ -138,6 +138,15 @@
         "documentation": {}
     },
     {
+        "label": "FeedForwardNeuralNetwork",
+        "kind": 6,
+        "importPath": "src.feedforward",
+        "description": "src.feedforward",
+        "peekOfCode": "class FeedForwardNeuralNetwork(nn.Module):\n    def __init__(self, hidden_dimension: int = 4096, output_dimension: int = 14336, bias: bool = True):\n        super(FeedForwardNeuralNetwork, self).__init__()\n        self.hidden_dimension = hidden_dimension\n        self.output_dimension = output_dimension\n        self.bias = bias\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):\n            raise TypeError(\"Input must be a torch.Tensor\")\nif __name__ == \"__main__\":",
+        "detail": "src.feedforward",
+        "documentation": {}
+    },
+    {
         "label": "RMSNorm",
         "kind": 6,
         "importPath": "src.rms_norm",
