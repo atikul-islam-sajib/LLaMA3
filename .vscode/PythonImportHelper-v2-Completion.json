@@ -104,6 +104,15 @@
         "documentation": {}
     },
     {
+        "label": "GroupedQueryAttention",
+        "kind": 6,
+        "importPath": "src.attention",
+        "description": "src.attention",
+        "peekOfCode": "class GroupedQueryAttention(nn.Module):\n    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):\n        super(GroupedQueryAttention, self).__init__()\n        self.dimension = dimension\n        self.query_heads = query_heads\n        self.kv_heads = kv_heads\n        assert self.dimension % self.query_heads == 0, \"Dimension must be divisible by query heads\".capitalize()\n        assert self.dimension % self.kv_heads == 0, \"Dimension must be divisible by kv heads\".capitalize()\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):",
+        "detail": "src.attention",
+        "documentation": {}
+    },
+    {
         "label": "RMSNorm",
         "kind": 6,
         "importPath": "src.rms_norm",
