@@ -3,6 +3,7 @@ import sys
 import torch
 import argparse
 import torch.nn as nn
+from torchview import draw_graph
 
 sys.path.append("./src/")
 
@@ -50,6 +51,13 @@ class FeedForwardNeuralNetwork(nn.Module):
 
         return self.down_projection(activation)
 
+    @staticmethod
+    def total_parameters(model):
+        if not isinstance(model, FeedForwardNeuralNetwork):
+            raise TypeError("Input must be a FeedForwardNeuralNetwork")
+
+        return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -67,6 +75,15 @@ if __name__ == "__main__":
         default=14336,
         help="Dimension of the output layer".capitalize(),
     )
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        help="Display the graph".capitalize(),
+    )
+    parser.add_argument(
+        "--params", action="store_true", help="Display the parameters".capitalize()
+    )
+
     args = parser.parse_args()
 
     hidden_dimension = args.hidden_dimension
@@ -86,3 +103,16 @@ if __name__ == "__main__":
         sequence_length,
         hidden_dimension,
     ), "FeedForwardNeuralNetwork is not working properly".capitalize()
+
+    if args.display:
+        draw_graph(model=network, input_data=texts).visual_graph.render(
+            filename="./artifacts/files/MLP", format="png"
+        )
+        print("Image saved in the folder ./artifacts/files/MLP.png".capitalize())
+
+    if args.params:
+        print(
+            "Total paramaters of the MLP = {}".format(
+                FeedForwardNeuralNetwork.total_parameters(model=network)
+            )
+        )
