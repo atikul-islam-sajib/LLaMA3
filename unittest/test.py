@@ -1,17 +1,23 @@
 import os
 import sys
 import torch
+import warnings
 import unittest
 import torch.nn as nn
 
 sys.path.append("./src/")
 
-from rms_norm import RMSNorm
-from activation_func import SwiGLU
-from positional_encoding import RoPE
-from attention import GroupedQueryAttention
-from feedforward import FeedForwardNeuralNetwork
-from transformer_block import TransformerBlock
+try:
+    from rms_norm import RMSNorm
+    from activation_func import SwiGLU
+    from positional_encoding import RoPE
+    from attention import GroupedQueryAttention
+    from feedforward import FeedForwardNeuralNetwork
+    from transformer_block import TransformerBlock
+    from model import LLaMA3
+except ImportError:
+    warnings.warn("Unable to import modules".capitalize())
+    sys.exit(1)
 
 
 class UnitTest(unittest.TestCase):
@@ -41,6 +47,17 @@ class UnitTest(unittest.TestCase):
             query_heads=self.query_heads,
             kv_heads=self.kv_heads,
             sequence_length=self.sequence_length,
+            output_dimension=self.dimension_size * 4,
+        )
+        self.model = LLaMA3(
+            dimension=self.dimension_size,
+            num_vocabularies=4096,
+            query_heads=self.query_heads,
+            num_layers=1,
+            kv_heads=self.kv_heads,
+            eps=1e-4,
+            sequence_length=self.sequence_length,
+            base=10000,
             output_dimension=self.dimension_size * 4,
         )
 
@@ -142,7 +159,24 @@ class UnitTest(unittest.TestCase):
             torch.Tensor,
             "TransformerBlock is not working properly".capitalize(),
         )
+        
+    def test_model(self):
+        texts = torch.randn(
+            (self.batch_size, self.sequence_length, self.dimension_size)
+        )
+        output = torch.randn((self.batch_size, 4096))
+        self.assertEqual(
+            self.model(texts).shape,
+            output.shape,
+            "LLaMA3 is not working properly".capitalize(),
+        )
+
+        self.assertIsInstance(
+            self.model(texts),
+            torch.Tensor,
+            "LLaMA3 is not working properly".capitalize(),
+        )
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     unittest.main()
