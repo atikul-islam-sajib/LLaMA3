@@ -1,6 +1,7 @@
 import os
 import sys
 import torch
+import argparse
 import torch.nn as nn
 
 sys.path.append("./src/")
@@ -33,12 +34,12 @@ class TransformerBlock(nn.Module):
 
         self.attention_norm = RMSNorm(dimension=self.dimension, eps=self.eps)
         self.feedforward_norm = RMSNorm(dimension=self.dimension, eps=self.eps)
-        
+
         self.attention = GroupedQueryAttention(
             dimension=self.dimension,
             query_heads=self.query_heads,
             kv_heads=self.kv_heads,
-            sequence_length=self.sequence_length
+            sequence_length=self.sequence_length,
         )
         self.feedforward_network = FeedForwardNeuralNetwork(
             hidden_dimension=self.dimension, output_dimension=self.output_dimension
@@ -47,37 +48,80 @@ class TransformerBlock(nn.Module):
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise TypeError("Input must be a torch.Tensor".capitalize())
-        
+
         residual = x
-        
+
         x1 = self.attention_norm(x)
         x1 = self.attention(x1)
         x1 = torch.add(input=residual, other=x1)
-        
+
         residual = x1
-        
+
         x2 = self.feedforward_norm(x1)
         x2 = self.feedforward_network(x2)
         x2 = torch.add(input=residual, other=x2)
-        
+
         return x2
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Transformer Block for LLaMA".title())
+    parser.add_argument(
+        "--dimension",
+        type=int,
+        default=512,
+        help="Dimension of the input tensor".capitalize(),
+    )
+    parser.add_argument(
+        "--query_heads", type=int, default=8, help="Number of query heads".capitalize()
+    )
+    parser.add_argument(
+        "--kv_heads", type=int, default=4, help="Number of kv heads".capitalize()
+    )
+    parser.add_argument(
+        "--sequence_length",
+        type=int,
+        default=128,
+        help="Sequence length of the input tensor".capitalize(),
+    )
+    parser.add_argument(
+        "--base",
+        type=int,
+        default=10000,
+        help="Base of the exponential function".capitalize(),
+    )
+    parser.add_argument(
+        "--output_dimension",
+        type=int,
+        default=14336,
+        help="Output dimension of the feedforward network".capitalize(),
+    )
+
+    args = parser.parse_args()
+
+    dimension = args.dimension
+    query_heads = args.query_heads
+    kv_heads = args.kv_heads
+    sequence_length = args.sequence_length
+    base = args.base
+    output_dimension = args.output_dimension
+
+    batch_size = 64
+    sequence_length = 128
+
     transformer = TransformerBlock(
-        dimension=512,
-        query_heads=8,
-        kv_heads=4,
-        sequence_length=128,
-        base=10000,
-        output_dimension=14336,
+        dimension=dimension,
+        query_heads=query_heads,
+        kv_heads=kv_heads,
+        sequence_length=sequence_length,
+        base=base,
+        output_dimension=output_dimension,
     )
 
-    input_tensor = torch.randn(64, 128, 512)
-    output_tensor = transformer(input_tensor)
+    input_tensor = torch.randn(batch_size, sequence_length, dimension)
 
-    print(
-        "TransformerBlock is working properly"
-        if output_tensor.size() == (64, 128, 512)
-        else "TransformerBlock is not working properly".capitalize()
-    )
+    assert transformer(input_tensor).size() == (
+        batch_size,
+        sequence_length,
+        dimension,
+    ), "Transformer block is not working properly".capitalize()
