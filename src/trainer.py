@@ -28,7 +28,7 @@ class Trainer:
         self.lr = lr
         self.beta1 = beta1
         self.beta2 = beta2
-        
+
         self.device = device_init(device=self.device)
 
         self.model = LLaMA3(
@@ -79,17 +79,34 @@ if __name__ == "__main__":
         "--dataloader", type=DataLoader, default=None, help="Dataloader".title()
     )
     parser.add_argument(
-        "--epochs", type=int, default=100, help="Number of epochs".title()
-    )
-    parser.add_argument("--lr", type=float, default=1e-5, help="Learning rate".title())
-    parser.add_argument(
-        "--beta1", type=float, default=0.9, help="Beta1 for Adam optimizer".title()
-    )
-    parser.add_argument(
-        "--beta2", type=float, default=0.999, help="Beta2 for Adam optimizer".title()
+        "--epochs",
+        type=int,
+        default=config_files()["trainer"]["epochs"],
+        help="Number of epochs".title(),
     )
     parser.add_argument(
-        "--device", type=str, default="cpu", help="Device to use".title()
+        "--lr",
+        type=float,
+        default=config_files()["trainer"]["lr"],
+        help="Learning rate".title(),
+    )
+    parser.add_argument(
+        "--beta1",
+        type=float,
+        default=config_files()["trainer"]["beta1"],
+        help="Beta1 for Adam optimizer".title(),
+    )
+    parser.add_argument(
+        "--beta2",
+        type=float,
+        default=config_files()["trainer"]["beta2"],
+        help="Beta2 for Adam optimizer".title(),
+    )
+    parser.add_argument(
+        "--device",
+        type=str,
+        default=config_files()["trainer"]["device"],
+        help="Device to use".title(),
     )
 
     args = parser.parse_args()

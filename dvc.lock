@@ -1,0 +1,41 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python src/trainer.py
+    deps:
+    - path: ./config.yml
+      hash: md5
+      md5: 907a182970648fc0ce185480b147eefa
+      size: 400
+    - path: src/activation_func.py
+      hash: md5
+      md5: 32dc2ea9cef41d5b5acf345de534712d
+      size: 1113
+    - path: src/attention.py
+      hash: md5
+      md5: 40bcf9315db0bfc52ae3b99925ba88e8
+      size: 5792
+    - path: src/feedforward.py
+      hash: md5
+      md5: 8f49e76334fd38144954605d258c4c0a
+      size: 3410
+    - path: src/model.py
+      hash: md5
+      md5: ce8256eee959a599c23d335d5577f1de
+      size: 5817
+    - path: src/positional_encoding.py
+      hash: md5
+      md5: 119097317f5d582e9927fc860c523998
+      size: 2671
+    - path: src/rms_norm.py
+      hash: md5
+      md5: 8f3279b7b1d927842270da3384d2bd6a
+      size: 1616
+    - path: src/transformer_block.py
+      hash: md5
+      md5: 14735bea024c009d0f4b641e3e6ad61b
+      size: 4750
+    - path: src/utils.py
+      hash: md5
+      md5: 8e1bced95322027db3201ae252032ce1
+      size: 460

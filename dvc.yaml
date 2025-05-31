@@ -1,0 +1,13 @@
+stages:
+  train:
+    cmd: python src/trainer.py
+    deps:
+      - src/activation_func.py
+      - src/attention.py
+      - src/feedforward.py
+      - src/model.py
+      - src/positional_encoding.py  # double check file name!
+      - src/rms_norm.py
+      - src/transformer_block.py
+      - src/utils.py
+      - ./config.yml
