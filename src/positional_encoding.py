@@ -49,8 +49,6 @@ class RoPE(nn.Module):
         return output
         
         
-        
-        
 if __name__ == "__main__":
     encoding = RoPE(dimension=512, sequence_length=128)
     
