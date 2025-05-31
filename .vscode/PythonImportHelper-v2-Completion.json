@@ -104,6 +104,14 @@
         "documentation": {}
     },
     {
+        "label": "RoPE",
+        "importPath": "positional_encoding",
+        "description": "positional_encoding",
+        "isExtraImport": true,
+        "detail": "positional_encoding",
+        "documentation": {}
+    },
+    {
         "label": "GroupedQueryAttention",
         "importPath": "attention",
         "description": "attention",

@@ -8,6 +8,7 @@ sys.path.append("./src/")
 
 from rms_norm import RMSNorm
 from activation_func import SwiGLU
+from positional_encoding import RoPE
 from attention import GroupedQueryAttention
 from feedforward import FeedForwardNeuralNetwork
 
@@ -31,6 +32,7 @@ class UnitTest(unittest.TestCase):
             hidden_dimension=self.dimension_size,
             output_dimension=self.dimension_size * 4,
         )
+        self.positional_encoding = RoPE(dimension=self.dimension_size, sequence_length=self.sequence_length)
 
     def test_activation_func(self):
         texts = torch.randn(
@@ -97,6 +99,22 @@ class UnitTest(unittest.TestCase):
             self.network(texts),
             torch.Tensor,
             "FeedForwardNeuralNetwork is not working properly".capitalize(),
+        )
+        
+    def test_positional_encoding(self):
+        texts = torch.randn(
+            (self.batch_size, self.sequence_length, self.dimension_size)
+        )
+        self.assertEqual(
+            self.positional_encoding(texts).shape,
+            texts.shape,
+            "RoPE is not working properly".capitalize(),
+        )
+
+        self.assertIsInstance(
+            self.positional_encoding(texts),
+            torch.Tensor,
+            "RoPE is not working properly".capitalize(),
         )
 
 
