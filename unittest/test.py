@@ -11,6 +11,7 @@ from activation_func import SwiGLU
 from positional_encoding import RoPE
 from attention import GroupedQueryAttention
 from feedforward import FeedForwardNeuralNetwork
+from transformer_block import TransformerBlock
 
 
 class UnitTest(unittest.TestCase):
@@ -32,7 +33,16 @@ class UnitTest(unittest.TestCase):
             hidden_dimension=self.dimension_size,
             output_dimension=self.dimension_size * 4,
         )
-        self.positional_encoding = RoPE(dimension=self.dimension_size, sequence_length=self.sequence_length)
+        self.positional_encoding = RoPE(
+            dimension=self.dimension_size, sequence_length=self.sequence_length
+        )
+        self.transformer = TransformerBlock(
+            dimension=self.dimension_size,
+            query_heads=self.query_heads,
+            kv_heads=self.kv_heads,
+            sequence_length=self.sequence_length,
+            output_dimension=self.dimension_size * 4,
+        )
 
     def test_activation_func(self):
         texts = torch.randn(
@@ -84,7 +94,7 @@ class UnitTest(unittest.TestCase):
             torch.Tensor,
             "Attention layer is not working properly".capitalize(),
         )
-        
+
     def test_mlp_layer(self):
         texts = torch.randn(
             (self.batch_size, self.sequence_length, self.dimension_size)
@@ -100,7 +110,7 @@ class UnitTest(unittest.TestCase):
             torch.Tensor,
             "FeedForwardNeuralNetwork is not working properly".capitalize(),
         )
-        
+
     def test_positional_encoding(self):
         texts = torch.randn(
             (self.batch_size, self.sequence_length, self.dimension_size)
@@ -115,6 +125,22 @@ class UnitTest(unittest.TestCase):
             self.positional_encoding(texts),
             torch.Tensor,
             "RoPE is not working properly".capitalize(),
+        )
+        
+    def test_transformer_block(self):
+        texts = torch.randn(
+            (self.batch_size, self.sequence_length, self.dimension_size)
+        )
+        self.assertEqual(
+            self.transformer(texts).shape,
+            texts.shape,
+            "TransformerBlock is not working properly".capitalize(),
+        )
+
+        self.assertIsInstance(
+            self.transformer(texts),
+            torch.Tensor,
+            "TransformerBlock is not working properly".capitalize(),
         )
 
 

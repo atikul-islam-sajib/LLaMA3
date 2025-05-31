@@ -144,6 +144,14 @@
         "documentation": {}
     },
     {
+        "label": "TransformerBlock",
+        "importPath": "transformer_block",
+        "description": "transformer_block",
+        "isExtraImport": true,
+        "detail": "transformer_block",
+        "documentation": {}
+    },
+    {
         "label": "setup",
         "importPath": "setuptools",
         "description": "setuptools",
