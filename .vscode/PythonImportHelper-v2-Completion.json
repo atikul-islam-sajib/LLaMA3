@@ -137,6 +137,15 @@
         "documentation": {}
     },
     {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
+        "documentation": {}
+    },
+    {
         "label": "unittest",
         "kind": 6,
         "isExtraImport": true,
@@ -231,6 +240,24 @@
         "description": "src.transformer_block",
         "peekOfCode": "class TransformerBlock(nn.Module):\n    def __init__(\n        self,\n        dimension: int = 512,\n        query_heads: int = 8,\n        kv_heads: int = 4,\n        eps: float = 1e-4,\n        sequence_length: int = 128,\n        base: int = 10000,\n        output_dimension: int = 14336,",
         "detail": "src.transformer_block",
+        "documentation": {}
+    },
+    {
+        "label": "device_init",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def device_init(device: str = \"cuda\"):\n    if device == \"cuda\":\n        return torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")\n    elif device == \"mps\":\n        return torch.device(\"mps\" if torch.backends.mps.is_available() else \"cpu\")\n    else:\n        return torch.device(\"cpu\")\ndef config_files():\n    with open(file=\"./config.yml\", mode=\"r\") as file:\n        return yaml.safe_load(file)",
+        "detail": "src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "config_files",
+        "kind": 2,
+        "importPath": "src.utils",
+        "description": "src.utils",
+        "peekOfCode": "def config_files():\n    with open(file=\"./config.yml\", mode=\"r\") as file:\n        return yaml.safe_load(file)",
+        "detail": "src.utils",
         "documentation": {}
     },
     {
