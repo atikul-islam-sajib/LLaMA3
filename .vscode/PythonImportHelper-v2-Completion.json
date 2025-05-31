@@ -87,6 +87,14 @@
         "documentation": {}
     },
     {
+        "label": "draw_graph",
+        "importPath": "torchview",
+        "description": "torchview",
+        "isExtraImport": true,
+        "detail": "torchview",
+        "documentation": {}
+    },
+    {
         "label": "RoPE",
         "importPath": "positional_encoding",
         "description": "positional_encoding",
