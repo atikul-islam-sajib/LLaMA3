@@ -1,8 +1,9 @@
 import os
 import sys
 import torch
-import torch.optim as optim
+import argparse
 import torch.nn as nn
+import torch.optim as optim
 from torch.utils.data import DataLoader
 
 sys.path.append("./src/")
@@ -58,12 +59,11 @@ class Trainer:
                 loss = self.criterion(
                     outputs.view(-1, outputs.size(-1)), labels.view(-1)
                 )
+                train_loss.append(loss.item())
 
                 self.optimzer.zero_grad()
                 loss.backward()
                 self.optimzer.step()
-
-                train_loss.append(loss.item())
 
             print(
                 f"Epoch {epoch+1}/{self.epochs} - Train Loss: {sum(train_loss)/len(train_loss)}"
@@ -71,6 +71,32 @@ class Trainer:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Trainer class for LLaMA3".title())
+    parser.add_argument(
+        "--dataloader", type=DataLoader, default=None, help="Dataloader".title()
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=100, help="Number of epochs".title()
+    )
+    parser.add_argument("--lr", type=float, default=1e-5, help="Learning rate".title())
+    parser.add_argument(
+        "--beta1", type=float, default=0.9, help="Beta1 for Adam optimizer".title()
+    )
+    parser.add_argument(
+        "--beta2", type=float, default=0.999, help="Beta2 for Adam optimizer".title()
+    )
+    parser.add_argument(
+        "--device", type=str, default="cpu", help="Device to use".title()
+    )
+
+    args = parser.parse_args()
+
+    epochs = args.epochs
+    lr = args.lr
+    beta1 = args.beta1
+    beta2 = args.beta2
+    device = args.device
+
     texts = torch.randint(0, 4096, (64, 128))
     labels = torch.randint(0, 4096, (64, 128))
 
@@ -79,6 +105,14 @@ if __name__ == "__main__":
     )
 
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
-    trainer = Trainer(dataloader=dataloader, device=device, epochs=2)
+
+    trainer = Trainer(
+        dataloader=dataloader,
+        device=device,
+        epochs=epochs,
+        lr=lr,
+        beta1=beta1,
+        beta2=beta2,
+    )
 
     trainer.train()
