@@ -79,11 +79,11 @@
         "documentation": {}
     },
     {
-        "label": "RoPE",
-        "importPath": "positional_encoding",
-        "description": "positional_encoding",
+        "label": "draw_graph",
+        "importPath": "torchview",
+        "description": "torchview",
         "isExtraImport": true,
-        "detail": "positional_encoding",
+        "detail": "torchview",
         "documentation": {}
     },
     {
@@ -95,51 +95,11 @@
         "documentation": {}
     },
     {
-        "label": "RMSNorm",
-        "importPath": "rms_norm",
-        "description": "rms_norm",
+        "label": "RoPE",
+        "importPath": "positional_encoding",
+        "description": "positional_encoding",
         "isExtraImport": true,
-        "detail": "rms_norm",
-        "documentation": {}
-    },
-    {
-        "label": "RMSNorm",
-        "importPath": "rms_norm",
-        "description": "rms_norm",
-        "isExtraImport": true,
-        "detail": "rms_norm",
-        "documentation": {}
-    },
-    {
-        "label": "GroupedQueryAttention",
-        "importPath": "attention",
-        "description": "attention",
-        "isExtraImport": true,
-        "detail": "attention",
-        "documentation": {}
-    },
-    {
-        "label": "GroupedQueryAttention",
-        "importPath": "attention",
-        "description": "attention",
-        "isExtraImport": true,
-        "detail": "attention",
-        "documentation": {}
-    },
-    {
-        "label": "FeedForwardNeuralNetwork",
-        "importPath": "feedforward",
-        "description": "feedforward",
-        "isExtraImport": true,
-        "detail": "feedforward",
-        "documentation": {}
-    },
-    {
-        "label": "FeedForwardNeuralNetwork",
-        "importPath": "feedforward",
-        "description": "feedforward",
-        "isExtraImport": true,
-        "detail": "feedforward",
+        "detail": "positional_encoding",
         "documentation": {}
     },
     {
@@ -152,11 +112,35 @@
         "documentation": {}
     },
     {
+        "label": "RMSNorm",
+        "importPath": "rms_norm",
+        "description": "rms_norm",
+        "isExtraImport": true,
+        "detail": "rms_norm",
+        "documentation": {}
+    },
+    {
         "label": "SwiGLU",
         "importPath": "activation_func",
         "description": "activation_func",
         "isExtraImport": true,
         "detail": "activation_func",
+        "documentation": {}
+    },
+    {
+        "label": "GroupedQueryAttention",
+        "importPath": "attention",
+        "description": "attention",
+        "isExtraImport": true,
+        "detail": "attention",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feedforward",
+        "description": "feedforward",
+        "isExtraImport": true,
+        "detail": "feedforward",
         "documentation": {}
     },
     {

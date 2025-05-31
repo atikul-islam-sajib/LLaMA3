@@ -2,13 +2,21 @@ import os
 import sys
 import torch
 import argparse
+import warnings
 import torch.nn as nn
+from torchview import draw_graph
 
 sys.path.append("./src/")
 
-from rms_norm import RMSNorm
-from attention import GroupedQueryAttention
-from feedforward import FeedForwardNeuralNetwork
+try:
+    from rms_norm import RMSNorm
+    from attention import GroupedQueryAttention
+    from feedforward import FeedForwardNeuralNetwork
+except ImportError:
+    warnings.warn("Unable to import modules".capitalize())
+    sys.exit(1)
+
+warnings.filterwarnings("ignore")
 
 
 class TransformerBlock(nn.Module):
@@ -63,6 +71,13 @@ class TransformerBlock(nn.Module):
 
         return x2
 
+    @staticmethod
+    def total_parameters(model):
+        if not isinstance(model, TransformerBlock):
+            raise TypeError("Model must be a TransformerBlock".capitalize())
+
+        return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Transformer Block for LLaMA".title())
@@ -96,6 +111,10 @@ if __name__ == "__main__":
         default=14336,
         help="Output dimension of the feedforward network".capitalize(),
     )
+    parser.add_argument(
+        "--display", action="store_true", help="Display the graph".capitalize()
+    )
+    parser.add_argument("--params", action="store_true", help="Display the parameters".capitalize())
 
     args = parser.parse_args()
 
@@ -125,3 +144,18 @@ if __name__ == "__main__":
         sequence_length,
         dimension,
     ), "Transformer block is not working properly".capitalize()
+
+    if args.display:
+        draw_graph(model=transformer, input_data=input_tensor).visual_graph.render(
+            filename="./artifacts/files/transformerBlock", format="png"
+        )
+        print(
+            "Image saved in the folder ./artifacts/files/transformerBlock.png".capitalize()
+        )
+        
+    if args.params:
+        print(
+            "Total paramaters of the GQA = {}".format(
+                TransformerBlock.total_parameters(model=transformer)
+            )
+        )
