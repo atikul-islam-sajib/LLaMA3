@@ -39,7 +39,7 @@ It is trained in an autoregressive fashion to predict the next token in a sequen
 ## Files
 
 - `model.py` — defines the LLaMA3 transformer model
-- `trainer.py` — training loop using synthetic tokenized input
+- `trainer.py` — training loop using synthetic tokenized input - make sure you have created the dataloader which is appropriated with LLaMA 
 
 ---
 
