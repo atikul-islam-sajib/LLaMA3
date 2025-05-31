@@ -9,6 +9,7 @@ from torch.utils.data import DataLoader
 sys.path.append("./src/")
 
 from model import LLaMA3
+from utils import config_files
 
 
 class Trainer:
@@ -29,15 +30,15 @@ class Trainer:
         self.beta2 = beta2
 
         self.model = LLaMA3(
-            dimension=512,
-            num_vocabularies=4096,
-            query_heads=8,
-            num_layers=1,
-            kv_heads=4,
-            eps=1e-4,
-            sequence_length=128,
-            base=10000,
-            output_dimension=14336,
+            dimension=config_files()["LLaMA"]["dimension"],
+            num_vocabularies=config_files()["LLaMA"]["num_vocabularies"],
+            query_heads=config_files()["LLaMA"]["query_heads"],
+            num_layers=config_files()["LLaMA"]["num_layers"],
+            kv_heads=config_files()["LLaMA"]["kv_heads"],
+            eps=float(config_files()["LLaMA"]["eps"]),
+            sequence_length=config_files()["LLaMA"]["sequence_length"],
+            base=config_files()["LLaMA"]["base"],
+            output_dimension=config_files()["LLaMA"]["output_dimension"],
         )
 
         self.model.to(self.device)
