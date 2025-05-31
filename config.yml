@@ -7,7 +7,7 @@ LLaMA:
   dimension: 512
   num_vocabularies: 4096
   query_heads: 8
-  num_layers: 1
+  num_layers: 16
   kv_heads: 4
   eps: 1e-4
   sequence_length: 128
@@ -15,7 +15,7 @@ LLaMA:
   output_dimension: 14336
 
 trainer:
-  epochs: 2
+  epochs: 200
   lr: 1e-5
   beta1: 0.9
   beta2: 0.999

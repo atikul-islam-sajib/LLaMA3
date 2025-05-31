@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 sys.path.append("./src/")
 
 from model import LLaMA3
-from utils import config_files
+from utils import config_files, device_init
 
 
 class Trainer:
@@ -28,6 +28,8 @@ class Trainer:
         self.lr = lr
         self.beta1 = beta1
         self.beta2 = beta2
+        
+        self.device = device_init(device=self.device)
 
         self.model = LLaMA3(
             dimension=config_files()["LLaMA"]["dimension"],
@@ -104,8 +106,6 @@ if __name__ == "__main__":
     dataloader = DataLoader(
         dataset=list(zip(texts, labels)), batch_size=64, shuffle=True
     )
-
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
     trainer = Trainer(
         dataloader=dataloader,
