@@ -197,6 +197,15 @@
         "documentation": {}
     },
     {
+        "label": "TransformerBlock",
+        "kind": 6,
+        "importPath": "src.transformer_block",
+        "description": "src.transformer_block",
+        "peekOfCode": "class TransformerBlock(nn.Module):\n    def __init__(\n        self,\n        dimension: int = 512,\n        query_heads: int = 8,\n        kv_heads: int = 4,\n        eps: float = 1e-4,\n        sequence_length: int = 128,\n        base: int = 10000,\n        output_dimension: int = 14336,",
+        "detail": "src.transformer_block",
+        "documentation": {}
+    },
+    {
         "label": "UnitTest",
         "kind": 6,
         "importPath": "unittest.test",
