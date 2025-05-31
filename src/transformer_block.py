@@ -77,5 +77,7 @@ if __name__ == "__main__":
     output_tensor = transformer(input_tensor)
 
     print(
-        f"Input tensor shape: {input_tensor.shape}\nOutput tensor shape: {output_tensor.shape}"
+        "TransformerBlock is working properly"
+        if output_tensor.size() == (64, 128, 512)
+        else "TransformerBlock is not working properly".capitalize()
     )
