@@ -1,19 +1,19 @@
 strict digraph model {
-	graph [ordering=in rankdir=TB size="121.5,121.5"]
+	graph [ordering=in rankdir=TB size="122.1,122.1"]
 	node [align=left fontname="Linux libertine" fontsize=10 height=0.2 margin=0 ranksep=0.1 shape=plaintext style=filled]
 	edge [fontsize=10]
 	0 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
-                        <TR><TD>input-tensor<BR/>depth:0</TD><TD>(1, 128, 512)</TD></TR>
+                        <TR><TD>input-tensor<BR/>depth:0</TD><TD>(1, 128)</TD></TR>
                     </TABLE>> fillcolor=lightyellow]
 	1 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
+                        <TD ROWSPAN="2">Embedding<BR/>depth:1</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                        <TD COLSPAN="2">(1, 128) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
@@ -24,7 +24,7 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -43,7 +43,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	4 [label=<
@@ -63,6 +63,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	6 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -72,7 +85,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	6 [label=<
+	7 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -85,7 +98,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	7 [label=<
+	8 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -96,19 +109,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	8 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	9 [label=<
@@ -128,13 +128,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	11 [label=<
@@ -143,11 +143,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	12 [label=<
@@ -167,13 +167,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	14 [label=<
@@ -193,6 +193,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	16 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -202,7 +215,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	16 [label=<
+	17 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -215,7 +228,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	17 [label=<
+	18 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -228,7 +241,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	18 [label=<
+	19 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -241,7 +254,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	19 [label=<
+	20 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -254,7 +267,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	20 [label=<
+	21 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -267,7 +280,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	21 [label=<
+	22 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -280,7 +293,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	22 [label=<
+	23 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -293,7 +306,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	23 [label=<
+	24 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -306,7 +319,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	24 [label=<
+	25 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -317,19 +330,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	25 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	26 [label=<
@@ -349,6 +349,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	28 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -358,7 +371,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	28 [label=<
+	29 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -371,7 +384,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	29 [label=<
+	30 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -384,7 +397,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	30 [label=<
+	31 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -397,24 +410,11 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	31 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	32 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -433,7 +433,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	34 [label=<
@@ -453,6 +453,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	36 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -462,7 +475,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	36 [label=<
+	37 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -475,7 +488,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	37 [label=<
+	38 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -486,19 +499,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	38 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	39 [label=<
@@ -518,13 +518,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	41 [label=<
@@ -533,11 +533,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	42 [label=<
@@ -557,13 +557,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	44 [label=<
@@ -583,6 +583,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	46 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -592,7 +605,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	46 [label=<
+	47 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -605,7 +618,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	47 [label=<
+	48 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -618,7 +631,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	48 [label=<
+	49 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -631,7 +644,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	49 [label=<
+	50 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -644,7 +657,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	50 [label=<
+	51 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -657,7 +670,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	51 [label=<
+	52 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -670,7 +683,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	52 [label=<
+	53 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -683,7 +696,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	53 [label=<
+	54 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -696,7 +709,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	54 [label=<
+	55 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -707,19 +720,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	55 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	56 [label=<
@@ -739,6 +739,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	58 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -748,7 +761,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	58 [label=<
+	59 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -761,7 +774,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	59 [label=<
+	60 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -774,7 +787,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	60 [label=<
+	61 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -787,24 +800,11 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	61 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	62 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -823,7 +823,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	64 [label=<
@@ -843,6 +843,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	66 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -852,7 +865,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	66 [label=<
+	67 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -865,7 +878,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	67 [label=<
+	68 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -876,19 +889,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	68 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	69 [label=<
@@ -908,13 +908,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	71 [label=<
@@ -923,11 +923,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	72 [label=<
@@ -947,13 +947,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	74 [label=<
@@ -973,6 +973,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	76 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -982,7 +995,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	76 [label=<
+	77 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -995,7 +1008,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	77 [label=<
+	78 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1008,7 +1021,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	78 [label=<
+	79 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1021,7 +1034,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	79 [label=<
+	80 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1034,7 +1047,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	80 [label=<
+	81 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1047,7 +1060,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	81 [label=<
+	82 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1060,7 +1073,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	82 [label=<
+	83 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1073,7 +1086,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	83 [label=<
+	84 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1086,7 +1099,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	84 [label=<
+	85 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1097,19 +1110,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	85 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	86 [label=<
@@ -1129,6 +1129,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	88 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -1138,7 +1151,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	88 [label=<
+	89 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1151,7 +1164,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	89 [label=<
+	90 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1164,7 +1177,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	90 [label=<
+	91 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1177,24 +1190,11 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	91 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	92 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -1213,7 +1213,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	94 [label=<
@@ -1233,6 +1233,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	96 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -1242,7 +1255,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	96 [label=<
+	97 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1255,7 +1268,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	97 [label=<
+	98 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1266,19 +1279,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	98 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	99 [label=<
@@ -1298,13 +1298,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	101 [label=<
@@ -1313,11 +1313,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	102 [label=<
@@ -1337,13 +1337,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	104 [label=<
@@ -1363,6 +1363,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	106 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -1372,7 +1385,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	106 [label=<
+	107 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1385,7 +1398,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	107 [label=<
+	108 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1398,7 +1411,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	108 [label=<
+	109 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1411,7 +1424,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	109 [label=<
+	110 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1424,7 +1437,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	110 [label=<
+	111 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1437,7 +1450,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	111 [label=<
+	112 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1450,7 +1463,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	112 [label=<
+	113 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1463,7 +1476,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	113 [label=<
+	114 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1476,7 +1489,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	114 [label=<
+	115 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1487,19 +1500,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	115 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	116 [label=<
@@ -1519,6 +1519,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	118 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -1528,7 +1541,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	118 [label=<
+	119 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1541,7 +1554,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	119 [label=<
+	120 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1554,7 +1567,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	120 [label=<
+	121 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1567,24 +1580,11 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	121 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	122 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -1603,7 +1603,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	124 [label=<
@@ -1623,6 +1623,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	126 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -1632,7 +1645,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	126 [label=<
+	127 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1645,7 +1658,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	127 [label=<
+	128 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1656,19 +1669,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	128 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	129 [label=<
@@ -1688,13 +1688,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	131 [label=<
@@ -1703,11 +1703,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	132 [label=<
@@ -1727,13 +1727,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	134 [label=<
@@ -1753,6 +1753,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	136 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -1762,7 +1775,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	136 [label=<
+	137 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1775,7 +1788,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	137 [label=<
+	138 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1788,7 +1801,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	138 [label=<
+	139 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1801,7 +1814,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	139 [label=<
+	140 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1814,7 +1827,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	140 [label=<
+	141 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1827,7 +1840,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	141 [label=<
+	142 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1840,7 +1853,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	142 [label=<
+	143 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1853,7 +1866,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	143 [label=<
+	144 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1866,7 +1879,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	144 [label=<
+	145 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1877,19 +1890,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	145 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	146 [label=<
@@ -1909,6 +1909,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	148 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -1918,7 +1931,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	148 [label=<
+	149 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1931,7 +1944,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	149 [label=<
+	150 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1944,7 +1957,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	150 [label=<
+	151 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -1957,24 +1970,11 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	151 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	152 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">RMSNorm<BR/>depth:2</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
@@ -1993,7 +1993,7 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	154 [label=<
@@ -2013,6 +2013,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	156 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">RoPE<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
@@ -2022,7 +2035,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	156 [label=<
+	157 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2035,7 +2048,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	157 [label=<
+	158 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2046,19 +2059,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=aliceblue]
-	158 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 256) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	159 [label=<
@@ -2078,13 +2078,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">view<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 256) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	161 [label=<
@@ -2093,11 +2093,11 @@ strict digraph model {
                     <TR>
                         <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	162 [label=<
@@ -2117,13 +2117,13 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
-                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD ROWSPAN="2">permute<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 128, 4, 64) </TD>
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
 	164 [label=<
@@ -2143,6 +2143,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">repeat_interleave<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 4, 128, 64) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 8, 128, 64) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=aliceblue]
+	166 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">transpose<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
@@ -2152,7 +2165,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 64, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	166 [label=<
+	167 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2165,7 +2178,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	167 [label=<
+	168 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2178,7 +2191,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	168 [label=<
+	169 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2191,7 +2204,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 128) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	169 [label=<
+	170 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2204,7 +2217,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 8, 128, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	170 [label=<
+	171 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2217,7 +2230,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 8, 64) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	171 [label=<
+	172 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2230,7 +2243,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	172 [label=<
+	173 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2243,7 +2256,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	173 [label=<
+	174 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2256,7 +2269,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	174 [label=<
+	175 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2267,19 +2280,6 @@ strict digraph model {
                     <TR>
                         <TD COLSPAN="2">output: </TD>
                         <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
-	175 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 128, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	176 [label=<
@@ -2299,6 +2299,19 @@ strict digraph model {
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:3</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 128, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 128, 14336) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	178 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
                         <TD ROWSPAN="2">SiLU<BR/>depth:3</TD>
                         <TD COLSPAN="2">input:</TD>
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
@@ -2308,7 +2321,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	178 [label=<
+	179 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2321,7 +2334,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 14336) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	179 [label=<
+	180 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2334,7 +2347,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	180 [label=<
+	181 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2347,7 +2360,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	181 [label=<
+	182 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2360,7 +2373,7 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 128, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	182 [label=<
+	183 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2373,19 +2386,6 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=aliceblue]
-	183 [label=<
-                    <TABLE BORDER="0" CELLBORDER="1"
-                    CELLSPACING="0" CELLPADDING="4">
-                    <TR>
-                        <TD ROWSPAN="2">Linear<BR/>depth:2</TD>
-                        <TD COLSPAN="2">input:</TD>
-                        <TD COLSPAN="2">(1, 512) </TD>
-                    </TR>
-                    <TR>
-                        <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 512) </TD>
-                    </TR>
-                    </TABLE>> fillcolor=darkseagreen1]
 	184 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
@@ -2409,10 +2409,23 @@ strict digraph model {
                     </TR>
                     <TR>
                         <TD COLSPAN="2">output: </TD>
-                        <TD COLSPAN="2">(1, 4096) </TD>
+                        <TD COLSPAN="2">(1, 512) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
 	186 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">Linear<BR/>depth:2</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 512) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 4096) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	187 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                     <TR>
@@ -2425,30 +2438,30 @@ strict digraph model {
                         <TD COLSPAN="2">(1, 4096) </TD>
                     </TR>
                     </TABLE>> fillcolor=darkseagreen1]
-	187 [label=<
+	188 [label=<
                     <TABLE BORDER="0" CELLBORDER="1"
                     CELLSPACING="0" CELLPADDING="4">
                         <TR><TD>output-tensor<BR/>depth:0</TD><TD>(1, 4096)</TD></TR>
                     </TABLE>> fillcolor=lightyellow]
 	0 -> 1
-	0 -> 23
 	1 -> 2
-	1 -> 3
-	1 -> 4
+	1 -> 24
+	2 -> 3
+	2 -> 4
 	2 -> 5
 	3 -> 6
-	4 -> 9
-	5 -> 7
+	4 -> 7
+	5 -> 10
 	6 -> 8
-	7 -> 10
+	7 -> 9
 	8 -> 11
 	9 -> 12
-	10 -> 16
-	11 -> 13
+	10 -> 13
+	11 -> 17
 	12 -> 14
 	13 -> 15
-	14 -> 19
-	15 -> 16
+	14 -> 16
+	15 -> 20
 	16 -> 17
 	17 -> 18
 	18 -> 19
@@ -2457,33 +2470,33 @@ strict digraph model {
 	21 -> 22
 	22 -> 23
 	23 -> 24
-	23 -> 30
 	24 -> 25
-	24 -> 26
-	25 -> 28
-	26 -> 27
+	24 -> 31
+	25 -> 26
+	25 -> 27
+	26 -> 29
 	27 -> 28
 	28 -> 29
 	29 -> 30
 	30 -> 31
-	30 -> 53
 	31 -> 32
-	31 -> 33
-	31 -> 34
+	31 -> 54
+	32 -> 33
+	32 -> 34
 	32 -> 35
 	33 -> 36
-	34 -> 39
-	35 -> 37
+	34 -> 37
+	35 -> 40
 	36 -> 38
-	37 -> 40
+	37 -> 39
 	38 -> 41
 	39 -> 42
-	40 -> 46
-	41 -> 43
+	40 -> 43
+	41 -> 47
 	42 -> 44
 	43 -> 45
-	44 -> 49
-	45 -> 46
+	44 -> 46
+	45 -> 50
 	46 -> 47
 	47 -> 48
 	48 -> 49
@@ -2492,33 +2505,33 @@ strict digraph model {
 	51 -> 52
 	52 -> 53
 	53 -> 54
-	53 -> 60
 	54 -> 55
-	54 -> 56
-	55 -> 58
-	56 -> 57
+	54 -> 61
+	55 -> 56
+	55 -> 57
+	56 -> 59
 	57 -> 58
 	58 -> 59
 	59 -> 60
 	60 -> 61
-	60 -> 83
 	61 -> 62
-	61 -> 63
-	61 -> 64
+	61 -> 84
+	62 -> 63
+	62 -> 64
 	62 -> 65
 	63 -> 66
-	64 -> 69
-	65 -> 67
+	64 -> 67
+	65 -> 70
 	66 -> 68
-	67 -> 70
+	67 -> 69
 	68 -> 71
 	69 -> 72
-	70 -> 76
-	71 -> 73
+	70 -> 73
+	71 -> 77
 	72 -> 74
 	73 -> 75
-	74 -> 79
-	75 -> 76
+	74 -> 76
+	75 -> 80
 	76 -> 77
 	77 -> 78
 	78 -> 79
@@ -2527,33 +2540,33 @@ strict digraph model {
 	81 -> 82
 	82 -> 83
 	83 -> 84
-	83 -> 90
 	84 -> 85
-	84 -> 86
-	85 -> 88
-	86 -> 87
+	84 -> 91
+	85 -> 86
+	85 -> 87
+	86 -> 89
 	87 -> 88
 	88 -> 89
 	89 -> 90
 	90 -> 91
-	90 -> 113
 	91 -> 92
-	91 -> 93
-	91 -> 94
+	91 -> 114
+	92 -> 93
+	92 -> 94
 	92 -> 95
 	93 -> 96
-	94 -> 99
-	95 -> 97
+	94 -> 97
+	95 -> 100
 	96 -> 98
-	97 -> 100
+	97 -> 99
 	98 -> 101
 	99 -> 102
-	100 -> 106
-	101 -> 103
+	100 -> 103
+	101 -> 107
 	102 -> 104
 	103 -> 105
-	104 -> 109
-	105 -> 106
+	104 -> 106
+	105 -> 110
 	106 -> 107
 	107 -> 108
 	108 -> 109
@@ -2562,33 +2575,33 @@ strict digraph model {
 	111 -> 112
 	112 -> 113
 	113 -> 114
-	113 -> 120
 	114 -> 115
-	114 -> 116
-	115 -> 118
-	116 -> 117
+	114 -> 121
+	115 -> 116
+	115 -> 117
+	116 -> 119
 	117 -> 118
 	118 -> 119
 	119 -> 120
 	120 -> 121
-	120 -> 143
 	121 -> 122
-	121 -> 123
-	121 -> 124
+	121 -> 144
+	122 -> 123
+	122 -> 124
 	122 -> 125
 	123 -> 126
-	124 -> 129
-	125 -> 127
+	124 -> 127
+	125 -> 130
 	126 -> 128
-	127 -> 130
+	127 -> 129
 	128 -> 131
 	129 -> 132
-	130 -> 136
-	131 -> 133
+	130 -> 133
+	131 -> 137
 	132 -> 134
 	133 -> 135
-	134 -> 139
-	135 -> 136
+	134 -> 136
+	135 -> 140
 	136 -> 137
 	137 -> 138
 	138 -> 139
@@ -2597,33 +2610,33 @@ strict digraph model {
 	141 -> 142
 	142 -> 143
 	143 -> 144
-	143 -> 150
 	144 -> 145
-	144 -> 146
-	145 -> 148
-	146 -> 147
+	144 -> 151
+	145 -> 146
+	145 -> 147
+	146 -> 149
 	147 -> 148
 	148 -> 149
 	149 -> 150
 	150 -> 151
-	150 -> 173
 	151 -> 152
-	151 -> 153
-	151 -> 154
+	151 -> 174
+	152 -> 153
+	152 -> 154
 	152 -> 155
 	153 -> 156
-	154 -> 159
-	155 -> 157
+	154 -> 157
+	155 -> 160
 	156 -> 158
-	157 -> 160
+	157 -> 159
 	158 -> 161
 	159 -> 162
-	160 -> 166
-	161 -> 163
+	160 -> 163
+	161 -> 167
 	162 -> 164
 	163 -> 165
-	164 -> 169
-	165 -> 166
+	164 -> 166
+	165 -> 170
 	166 -> 167
 	167 -> 168
 	168 -> 169
@@ -2632,11 +2645,11 @@ strict digraph model {
 	171 -> 172
 	172 -> 173
 	173 -> 174
-	173 -> 180
 	174 -> 175
-	174 -> 176
-	175 -> 178
-	176 -> 177
+	174 -> 181
+	175 -> 176
+	175 -> 177
+	176 -> 179
 	177 -> 178
 	178 -> 179
 	179 -> 180
@@ -2647,4 +2660,5 @@ strict digraph model {
 	184 -> 185
 	185 -> 186
 	186 -> 187
+	187 -> 188
 }

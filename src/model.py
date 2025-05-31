@@ -44,6 +44,10 @@ class LLaMA3(nn.Module):
 
         self.ouput_layers = []
 
+        self.embedding = nn.Embedding(
+            num_embeddings=self.num_vocabularies, embedding_dim=self.dimension
+        )
+
         self.transformer_layers = nn.Sequential(
             *[
                 TransformerBlock(
@@ -77,6 +81,8 @@ class LLaMA3(nn.Module):
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
             raise TypeError("Input must be a torch.Tensor".capitalize())
+
+        x = self.embedding(x)
 
         for layer in self.transformer_layers:
             x = layer(x)
@@ -173,7 +179,9 @@ if __name__ == "__main__":
         output_dimension=output_dimension,
     )
 
-    x = torch.randn((sequence_length // sequence_length, sequence_length, dimension))
+    x = torch.randint(
+        0, num_vocabularies, (sequence_length // sequence_length, sequence_length)
+    )
 
     assert (model(x).size()) == (
         sequence_length // sequence_length,
