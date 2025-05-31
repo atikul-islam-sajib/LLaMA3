@@ -88,7 +88,6 @@ class LLaMA3(nn.Module):
             x = layer(x)
 
         x = self.rms_norm(x)
-        x = torch.mean(input=x, dim=1)
 
         output = self.output(x)
 

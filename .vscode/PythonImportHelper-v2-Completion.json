@@ -112,11 +112,28 @@
         "documentation": {}
     },
     {
+        "label": "torch.optim",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch.optim",
+        "description": "torch.optim",
+        "detail": "torch.optim",
+        "documentation": {}
+    },
+    {
         "label": "DataLoader",
         "importPath": "torch.utils.data",
         "description": "torch.utils.data",
         "isExtraImport": true,
         "detail": "torch.utils.data",
+        "documentation": {}
+    },
+    {
+        "label": "LLaMA3",
+        "importPath": "model",
+        "description": "model",
+        "isExtraImport": true,
+        "detail": "model",
         "documentation": {}
     },
     {
@@ -203,7 +220,7 @@
         "kind": 6,
         "importPath": "src.trainer",
         "description": "src.trainer",
-        "peekOfCode": "class Trainer():\n    def __init__(self, dataloader:DataLoader = None, epochs: int = 100):\n        self.dataloader = dataloader\n        self.epochs = epochs\n    def train(self):\n        pass\nif __name__ == \"__main__\":\n    pass",
+        "peekOfCode": "class Trainer:\n    def __init__(\n        self,\n        dataloader: DataLoader = None,\n        epochs: int = 100,\n        lr=1e-5,\n        beta1=0.9,\n        beta2=0.999,\n        device: str = \"cpu\",\n    ):",
         "detail": "src.trainer",
         "documentation": {}
     },
