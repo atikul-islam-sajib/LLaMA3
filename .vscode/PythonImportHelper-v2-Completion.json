@@ -103,14 +103,6 @@
         "documentation": {}
     },
     {
-        "label": "RoPE",
-        "importPath": "positional_encoding",
-        "description": "positional_encoding",
-        "isExtraImport": true,
-        "detail": "positional_encoding",
-        "documentation": {}
-    },
-    {
         "label": "tqdm",
         "kind": 6,
         "isExtraImport": true,
@@ -126,46 +118,6 @@
         "importPath": "unittest",
         "description": "unittest",
         "detail": "unittest",
-        "documentation": {}
-    },
-    {
-        "label": "RMSNorm",
-        "importPath": "rms_norm",
-        "description": "rms_norm",
-        "isExtraImport": true,
-        "detail": "rms_norm",
-        "documentation": {}
-    },
-    {
-        "label": "SwiGLU",
-        "importPath": "activation_func",
-        "description": "activation_func",
-        "isExtraImport": true,
-        "detail": "activation_func",
-        "documentation": {}
-    },
-    {
-        "label": "GroupedQueryAttention",
-        "importPath": "attention",
-        "description": "attention",
-        "isExtraImport": true,
-        "detail": "attention",
-        "documentation": {}
-    },
-    {
-        "label": "FeedForwardNeuralNetwork",
-        "importPath": "feedforward",
-        "description": "feedforward",
-        "isExtraImport": true,
-        "detail": "feedforward",
-        "documentation": {}
-    },
-    {
-        "label": "TransformerBlock",
-        "importPath": "transformer_block",
-        "description": "transformer_block",
-        "isExtraImport": true,
-        "detail": "transformer_block",
         "documentation": {}
     },
     {
