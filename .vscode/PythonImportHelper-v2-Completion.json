@@ -163,6 +163,15 @@
         "documentation": {}
     },
     {
+        "label": "RoPE",
+        "kind": 6,
+        "importPath": "src.positional_encoding",
+        "description": "src.positional_encoding",
+        "peekOfCode": "class RoPE(nn.Module):\n    def __init__(self, dimension: int = 512, sequence_length: int = 128):\n        super(RoPE, self).__init__()\n        self.dimension = dimension\n        self.sequence_length = sequence_length\n    def forward(self, x: torch.Tensor):\n        if not isinstance(x, torch.Tensor):\n            raise TypeError(\"Input must be a torch.Tensor\".capitalize())\nif __name__ == \"__main__\":\n    pass",
+        "detail": "src.positional_encoding",
+        "documentation": {}
+    },
+    {
         "label": "RMSNorm",
         "kind": 6,
         "importPath": "src.rms_norm",
