@@ -79,6 +79,22 @@
         "documentation": {}
     },
     {
+        "label": "RoPE",
+        "importPath": "positional_encoding",
+        "description": "positional_encoding",
+        "isExtraImport": true,
+        "detail": "positional_encoding",
+        "documentation": {}
+    },
+    {
+        "label": "RoPE",
+        "importPath": "positional_encoding",
+        "description": "positional_encoding",
+        "isExtraImport": true,
+        "detail": "positional_encoding",
+        "documentation": {}
+    },
+    {
         "label": "unittest",
         "kind": 6,
         "isExtraImport": true,
@@ -101,14 +117,6 @@
         "description": "activation_func",
         "isExtraImport": true,
         "detail": "activation_func",
-        "documentation": {}
-    },
-    {
-        "label": "RoPE",
-        "importPath": "positional_encoding",
-        "description": "positional_encoding",
-        "isExtraImport": true,
-        "detail": "positional_encoding",
         "documentation": {}
     },
     {

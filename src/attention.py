@@ -8,6 +8,8 @@ from torchview import draw_graph
 
 sys.path.append("./src/")
 
+from positional_encoding import RoPE
+
 
 class GroupedQueryAttention(nn.Module):
     def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):
@@ -50,6 +52,13 @@ class GroupedQueryAttention(nn.Module):
         self.output = nn.Linear(
             in_features=self.dimension, out_features=self.dimension, bias=False
         )
+        self.Q_positional_encoding = RoPE(
+            dimension=self.head_dim * self.query_heads,
+            sequence_length=self.dimension * 2,
+        )
+        self.K_positional_encoding = RoPE(
+            dimension=self.head_dim * self.kv_heads, sequence_length=self.dimension * 2
+        )
 
     def forward(self, x: torch.Tensor):
         if not isinstance(x, torch.Tensor):
@@ -58,6 +67,11 @@ class GroupedQueryAttention(nn.Module):
         query = self.query(x)
         key = self.key(x)
         value = self.value(x)
+
+        query = self.Q_positional_encoding(query)
+        key = self.K_positional_encoding(key)
+
+        print(query.size(), key.size(), value.size())
 
         assert (
             key.size() == value.size()
