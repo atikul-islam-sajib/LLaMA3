@@ -12,12 +12,13 @@ from positional_encoding import RoPE
 
 
 class GroupedQueryAttention(nn.Module):
-    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):
+    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4, sequence_length: int = 128):
         super(GroupedQueryAttention, self).__init__()
 
         self.dimension = dimension
         self.query_heads = query_heads
         self.kv_heads = kv_heads
+        self.sequence_length = sequence_length
 
         warnings.warn(
             """If you are defined the query heads = 8 and kv heads = 4, it is recommended to use the SwiGLU activation function""",
@@ -57,7 +58,7 @@ class GroupedQueryAttention(nn.Module):
             sequence_length=self.dimension * 2,
         )
         self.K_positional_encoding = RoPE(
-            dimension=self.head_dim * self.kv_heads, sequence_length=self.dimension * 2
+            dimension=self.head_dim * self.kv_heads, sequence_length=self.sequence_length
         )
 
     def forward(self, x: torch.Tensor):
@@ -70,8 +71,6 @@ class GroupedQueryAttention(nn.Module):
 
         query = self.Q_positional_encoding(query)
         key = self.K_positional_encoding(key)
-
-        print(query.size(), key.size(), value.size())
 
         assert (
             key.size() == value.size()

@@ -95,12 +95,11 @@
         "documentation": {}
     },
     {
-        "label": "unittest",
-        "kind": 6,
+        "label": "RMSNorm",
+        "importPath": "rms_norm",
+        "description": "rms_norm",
         "isExtraImport": true,
-        "importPath": "unittest",
-        "description": "unittest",
-        "detail": "unittest",
+        "detail": "rms_norm",
         "documentation": {}
     },
     {
@@ -112,11 +111,11 @@
         "documentation": {}
     },
     {
-        "label": "SwiGLU",
-        "importPath": "activation_func",
-        "description": "activation_func",
+        "label": "GroupedQueryAttention",
+        "importPath": "attention",
+        "description": "attention",
         "isExtraImport": true,
-        "detail": "activation_func",
+        "detail": "attention",
         "documentation": {}
     },
     {
@@ -133,6 +132,31 @@
         "description": "feedforward",
         "isExtraImport": true,
         "detail": "feedforward",
+        "documentation": {}
+    },
+    {
+        "label": "FeedForwardNeuralNetwork",
+        "importPath": "feedforward",
+        "description": "feedforward",
+        "isExtraImport": true,
+        "detail": "feedforward",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "SwiGLU",
+        "importPath": "activation_func",
+        "description": "activation_func",
+        "isExtraImport": true,
+        "detail": "activation_func",
         "documentation": {}
     },
     {
@@ -165,7 +189,7 @@
         "kind": 6,
         "importPath": "src.attention",
         "description": "src.attention",
-        "peekOfCode": "class GroupedQueryAttention(nn.Module):\n    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4):\n        super(GroupedQueryAttention, self).__init__()\n        self.dimension = dimension\n        self.query_heads = query_heads\n        self.kv_heads = kv_heads\n        warnings.warn(\n            \"\"\"If you are defined the query heads = 8 and kv heads = 4, it is recommended to use the SwiGLU activation function\"\"\",\n            UserWarning,\n        )",
+        "peekOfCode": "class GroupedQueryAttention(nn.Module):\n    def __init__(self, dimension: int = 512, query_heads: int = 8, kv_heads: int = 4, sequence_length: int = 128):\n        super(GroupedQueryAttention, self).__init__()\n        self.dimension = dimension\n        self.query_heads = query_heads\n        self.kv_heads = kv_heads\n        self.sequence_length = sequence_length\n        warnings.warn(\n            \"\"\"If you are defined the query heads = 8 and kv heads = 4, it is recommended to use the SwiGLU activation function\"\"\",\n            UserWarning,",
         "detail": "src.attention",
         "documentation": {}
     },
