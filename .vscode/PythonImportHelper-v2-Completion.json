@@ -195,6 +195,15 @@
         "documentation": {}
     },
     {
+        "label": "LLaMA3",
+        "kind": 6,
+        "importPath": "src.model",
+        "description": "src.model",
+        "peekOfCode": "class LLaMA3(nn.Module):\n    def __init__(\n        self,\n        dimension: int = 512,\n        query_heads: int = 8,\n        kv_heads: int = 4,\n        eps: float = 1e-4,\n        sequence_length: int = 128,\n        base: int = 10000,\n        output_dimension: int = 14336,",
+        "detail": "src.model",
+        "documentation": {}
+    },
+    {
         "label": "RoPE",
         "kind": 6,
         "importPath": "src.positional_encoding",
